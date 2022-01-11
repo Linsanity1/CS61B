@@ -14,7 +14,7 @@ public class Planet {
     public String imgFileName;
 
     /** Constants defined as public instance variable */
-    public double G_Const = 6.67e-11;
+    private double G_Const = 6.67e-11;
 
     /** First constructor */
     public Planet(double xP, double yP, double xV,
