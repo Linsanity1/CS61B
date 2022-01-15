@@ -1,9 +1,9 @@
 /** A Deque is a list of items of type T. */
 public class LinkedListDeque<T> {
-    public class Node {
-        public T item;
-        public Node prev;
-        public Node next;
+    private class Node {
+        private T item;
+        private Node prev;
+        private Node next;
 
         /* Constructors for Node. */
         public Node() {
@@ -48,12 +48,14 @@ public class LinkedListDeque<T> {
     /* Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
         sentinel.next = new Node(item, sentinel, sentinel.next);
+        sentinel.next.next.prev = sentinel.next;
         size += 1;
     }
 
     /* Adds an item of type T to the tail of the deque */
     public void addLast(T item) {
         sentinel.prev = new Node(item, sentinel.prev, sentinel);
+        sentinel.prev.prev.next = sentinel.prev;
         size += 1;
     }
 
@@ -132,3 +134,4 @@ public class LinkedListDeque<T> {
         return getRecursiveHelp(sentinel.next, index);
     }
 }
+
