@@ -23,22 +23,27 @@ public class ArrayDeque<T> {
     /** Resizes the underlying array to the target capacity. */
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        if (nextFirst <= nextLast) {
-            System.arraycopy(items, nextFirst + 1, a, nextFirst + 1, size);
+        if (nextFirst < nextLast) {
+            System.arraycopy(items, nextFirst + 1, a, 0, size);
+        } else {
+            if (nextFirst + 1 == items.length) {
+                System.arraycopy(items, 0, a, 0, size);
+            } else {
+                System.arraycopy(items, nextFirst + 1, a, 0, items.length - 1 - nextFirst);
+                System.arraycopy(items, 0, a, items.length - 1 - nextFirst, size - (items.length - 1 - nextFirst));
+            }
         }
-        else {
-            System.arraycopy(items, nextFirst + 1, a, nextFirst + 1, items.length - nextFirst);
-            System.arraycopy(items, 0, a, 0, size - (items.length - nextFirst));
-        }
+        nextFirst = a.length - 1;
+        nextLast = size;
         items = a;
     }
 
     /** Resizes the arrayDeque referring to the relation between size and length */
     private void resizeArray() {
-        if (size == items.length) {
-            resize(size * 2);
+        if (size >= items.length - 3) {
+            resize(items.length * 2);
         } else if (size <= items.length / 4) {
-            resize(size / 2);
+            resize(items.length / 2);
         }
     }
 
@@ -81,20 +86,21 @@ public class ArrayDeque<T> {
         for (int i = 0; i < size; i++) {
             if (nextFirst + 1 + i < items.length) {
                 System.out.print(items[nextFirst + 1 + i] + " ");
-            }
-            else {
+            } else {
                 System.out.print(items[nextFirst + 1 + i - items.length] + " ");
             }
-            System.out.println();
         }
+        System.out.println();
     }
 
-    /** Removes and returns the item at the front of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the front of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeFirst() {
-        if (items[nextFirst + 1] == null) {
+        if (size == 0) {
             return null;
         }
-        if (nextFirst + 1 == items.length - 1) {
+        if (nextFirst + 1 > items.length - 1) {
             nextFirst = 0;
         } else {
             nextFirst++;
@@ -106,12 +112,14 @@ public class ArrayDeque<T> {
         return rmItem;
     }
 
-    /** Removes and returns the item at the back of the deque. If no such item exists, returns null. */
+    /** Removes and returns the item at the back of the deque.
+     * If no such item exists, returns null.
+     */
     public T removeLast() {
-        if (items[nextLast - 1] == null) {
+        if (size == 0) {
             return null;
         }
-        if (nextLast - 1 == 0) {
+        if (nextLast - 1 < 0) {
             nextLast = items.length - 1;
         } else {
             nextLast--;
@@ -133,4 +141,29 @@ public class ArrayDeque<T> {
             return items[nextFirst + 1 + index - items.length];
         }
     }
+
+    /** main
+    public static void main(String[] args) {
+        ArrayDeque A = new ArrayDeque();
+        A.addFirst(1);
+        A.addFirst(2);
+        A.addFirst(3);
+        A.addFirst(4);
+        A.addLast(0);
+        A.addLast(-1);
+        A.addLast(-2);
+        A.addFirst(5);
+        A.addFirst(6);
+        int six = (int) A.removeFirst();
+        int five = (int) A.removeFirst();
+        int negTwo = (int) A.removeLast();
+        int negOne = (int) A.removeLast();
+        int zero = (int) A.removeLast();
+        int four = (int) A.removeFirst();
+        int three = (int) A.removeFirst();
+        int one = (int) A.removeLast();
+        A.addFirst(100);
+        A.printDeque();
+    }
+     */
 }
