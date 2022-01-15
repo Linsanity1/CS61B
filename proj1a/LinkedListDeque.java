@@ -123,7 +123,7 @@ public class LinkedListDeque<T> {
         } else {
             return getRecursiveHelp(start.next, index - 1);
         }
-    }gi
+    }
 
     public T getRecursive(int index) {
         if (index >= size) {
