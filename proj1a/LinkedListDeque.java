@@ -31,11 +31,13 @@ public class LinkedListDeque<T> {
     }
 
     /** Creates a deep copy of 'other'.*/
+    /**
     public LinkedListDeque(LinkedListDeque other) {
         sentinel = new Node();
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
+
         Node ptrCopy = sentinel;
         Node ptrOther = other.sentinel;
         while (ptrOther.next != other.sentinel) {
@@ -44,7 +46,12 @@ public class LinkedListDeque<T> {
             ptrCopy = ptrCopy.next;
             size += 1;
         }
+
+        for (int i = 0; i < other.size(); i += 1) {
+            addLast((T) other.get(i));
+        }
     }
+     */
 
     /** Adds an item of type T to the front of the deque. */
     public void addFirst(T item) {
