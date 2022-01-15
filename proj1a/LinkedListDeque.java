@@ -87,6 +87,7 @@ public class LinkedListDeque<T> {
             T firstItem = sentinel.next.item;
             sentinel.next = sentinel.next.next;
             sentinel.next.prev = sentinel;
+            size--;
             return firstItem;
         }
         return null;
@@ -98,6 +99,7 @@ public class LinkedListDeque<T> {
             T lastItem = sentinel.prev.item;
             sentinel.prev = sentinel.prev.prev;
             sentinel.prev.next = sentinel;
+            size--;
             return lastItem;
         }
         return null;
@@ -134,4 +136,5 @@ public class LinkedListDeque<T> {
         return getRecursiveHelp(sentinel.next, index);
     }
 }
+
 
