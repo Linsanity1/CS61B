@@ -1,6 +1,6 @@
 /** A Deque is a list of items of type T. */
 public class LinkedListDeque<T> {
-    private class Node {
+    public class Node {
         public T item;
         public Node prev;
         public Node next;
@@ -81,7 +81,7 @@ public class LinkedListDeque<T> {
 
     /* Removes and returns the item at the front of the deque. If no such item exists, returns null. */
     public T removeFirst() {
-        if (sentinel.next != null) {
+        if (sentinel.next != sentinel) {
             T firstItem = sentinel.next.item;
             sentinel.next = sentinel.next.next;
             sentinel.next.prev = sentinel;
@@ -92,7 +92,7 @@ public class LinkedListDeque<T> {
 
     /* Removes and returns the item at the back of the deque. If no such item exists, returns null. */
     public T removeLast() {
-        if (sentinel.prev != null) {
+        if (sentinel.prev != sentinel) {
             T lastItem = sentinel.prev.item;
             sentinel.prev = sentinel.prev.prev;
             sentinel.prev.next = sentinel;
