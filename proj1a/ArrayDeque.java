@@ -30,7 +30,8 @@ public class ArrayDeque<T> {
                 System.arraycopy(items, 0, a, 0, size);
             } else {
                 System.arraycopy(items, nextFirst + 1, a, 0, items.length - 1 - nextFirst);
-                System.arraycopy(items, 0, a, items.length - 1 - nextFirst, size - (items.length - 1 - nextFirst));
+                System.arraycopy(items, 0, a, items.length - 1 - nextFirst,
+                          size - (items.length - 1 - nextFirst));
             }
         }
         nextFirst = a.length - 1;
