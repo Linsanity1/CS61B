@@ -29,12 +29,17 @@ public class TestPalindrome {
     }
 
     /** Test isPalindrome with specified interface CharacterComparator cc */
-    static OffByOne offByOne = new OffByOne();
-    OffByN offBy5 = new OffByN(5);
+    // static OffByOne offByOne = new OffByOne();
+    //   OffByN offBy5 = new OffByN(5); */
+    CharacterComparator ccOffByOne = new OffByOne();
+
+    @Test
     public void testPalindromeCC() {
-        assertTrue(palindrome.isPalindrome("flake", offByOne));
-        assertTrue(palindrome.isPalindrome("ling", offBy5));
-        assertTrue(palindrome.isPalindrome("A", offBy5));
+        assertTrue(palindrome.isPalindrome("flake", ccOffByOne));
+        assertTrue(palindrome.isPalindrome("TRESS", ccOffByOne));
+        assertTrue(palindrome.isPalindrome("A", ccOffByOne));
+        assertFalse(palindrome.isPalindrome("moon", ccOffByOne));
+        assertFalse(palindrome.isPalindrome("noon", ccOffByOne));
     }
 
 }
