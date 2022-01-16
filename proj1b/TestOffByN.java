@@ -14,11 +14,4 @@ public class TestOffByN {
         assertFalse(offBy5.equalChars('A', 'A'));
     }
 
-    @Test
-    public void testIsPanlidrome() {
-        assertFalse(offBy5.isPalindrome("assa"));
-        assertTrue(offBy5.isPalindrome("ling"));
-        assertTrue(offBy5.isPalindrome("A"));
-    }
-
 }

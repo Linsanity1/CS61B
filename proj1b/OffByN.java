@@ -17,17 +17,4 @@ public class OffByN implements CharacterComparator {
         return ((x == y - N) || (x == y + N));
     }
 
-    /** Examines whether word is off-by-N palindrome. */
-    public boolean isPalindrome(String word) {
-        if (word.length() <= 1) {
-            return true;
-        }
-        for (int i = 0; i < word.length() / 2; i++) {
-            if (!equalChars(word.charAt(i), word.charAt(word.length() - 1 - i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

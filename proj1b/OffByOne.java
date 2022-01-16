@@ -10,17 +10,4 @@ public class OffByOne implements CharacterComparator {
         return ((x == y - 1) || (x == y + 1));
     }
 
-    /** Examines whether word is off-by-one palindrome. */
-    public boolean isPalindrome(String word) {
-        if (word.length() <= 1) {
-            return true;
-        }
-        for (int i = 0; i < word.length() / 2; i++) {
-            if (!equalChars(word.charAt(i), word.charAt(word.length() - 1 - i))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

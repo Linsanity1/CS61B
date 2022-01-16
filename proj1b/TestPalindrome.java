@@ -28,17 +28,8 @@ public class TestPalindrome {
         assertTrue(palindrome.isPalindrome("Yo b anana b oY"));
     }
 
-    /** Test overload isPalindrome written in OffByOne. */
-    static OffByOne offByOne = new OffByOne();
-
-    @Test
-    public void TestPalindrome() {
-        assertFalse(offByOne.isPalindrome("assa"));
-        assertTrue(offByOne.isPalindrome("flake"));
-        assertTrue(offByOne.isPalindrome("A"));
-    }
-
     /** Test isPalindrome with specified interface CharacterComparator cc */
+    static OffByOne offByOne = new OffByOne();
     OffByN offBy5 = new OffByN(5);
     public void testPalindromeCC() {
         assertTrue(palindrome.isPalindrome("flake", offByOne));
