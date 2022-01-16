@@ -1,7 +1,4 @@
 import org.junit.Test;
-
-import javax.swing.*;
-
 import static org.junit.Assert.*;
 
 public class TestPalindrome {
@@ -11,10 +8,10 @@ public class TestPalindrome {
 
     @Test
     public void testWordToDeque() {
-        Deque d = palindrome.wordToDeque("persiflage");
+        Deque deq = palindrome.wordToDeque("persiflage");
         String actual = "";
         for (int i = 0; i < "persiflage".length(); i++) {
-            actual += d.removeFirst();
+            actual += deq.removeFirst();
         }
         assertEquals("persiflage", actual);
     }

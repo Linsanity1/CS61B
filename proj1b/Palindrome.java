@@ -1,12 +1,12 @@
 public class Palindrome {
     /** Converts String to Deque */
     public Deque<Character> wordToDeque(String word) {
-        /* Deque Deq = new LinkedListDeque(); // Using LinkedListDeque */
-        Deque Deq = new ArrayDeque(); // Using ArrayDeque
+        /* Deque deq = new LinkedListDeque(); // Using LinkedListDeque */
+        Deque deq = new ArrayDeque(); // Using ArrayDeque
         for (int i = 0; i < word.length(); i++) {
-            Deq.addLast(word.charAt(i));
+            deq.addLast(word.charAt(i));
         }
-        return Deq;
+        return deq;
     }
 
     /** Examines whether the word is palindrome */
@@ -26,12 +26,12 @@ public class Palindrome {
          */
 
         /** Using Deque data structure
-        Deque Deq = wordToDeque(word);
-        if (Deq.size() <= 1) {
+        Deque deq = wordToDeque(word);
+        if (deq.size() <= 1) {
             return true;
         }
         for (int i = 0; i < Deq.size() / 2; i++) {
-            if (Deq.removeFirst() == Deq.removeLast()) {
+            if (deq.removeFirst() == deq.removeLast()) {
                 continue;
             } else {
                 return false;
@@ -41,18 +41,18 @@ public class Palindrome {
          */
 
         /** Using Deque data structure and recursion */
-        Deque Deq = wordToDeque(word);
-        return isPalindromeHelper(Deq);
+        Deque deq = wordToDeque(word);
+        return isPalindromeHelper(deq);
     }
 
-    private boolean isPalindromeHelper (Deque Deq) {
-        if (Deq.size() <= 1) {
+    private boolean isPalindromeHelper(Deque deq) {
+        if (deq.size() <= 1) {
             return true;
         }
-        if (Deq.removeFirst() != Deq.removeLast()) {
+        if (deq.removeFirst() != deq.removeLast()) {
             return false;
         }
-        return isPalindromeHelper(Deq);
+        return isPalindromeHelper(deq);
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
