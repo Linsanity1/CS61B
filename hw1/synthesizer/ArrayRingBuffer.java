@@ -17,27 +17,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
     /* Array for storing the buffer data. */
     private T[] rb;
 
-    /** Iterator method */
-    @Override
-    public Iterator<T> iterator() {
-        return new keyIterator();
-    }
-
-    private class keyIterator implements Iterator<T> {
-        int wizardPos = first;
-        public boolean hasNext() {
-            return wizardPos != last;
-        }
-        public T next() {
-            T returnVal = rb[wizardPos];
-            wizardPos += 1;
-            if (wizardPos == capacity) {
-                wizardPos = 0;
-            }
-            return returnVal;
-        }
-    }
-
     /**
      * Create a new ArrayRingBuffer with the given capacity.
      */
@@ -100,8 +79,31 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> implements Itera
     @Override
     public T peek() {
         // Return the first item. None of your instance variables should change.
+        if (fillCount == 0) {
+            throw new RuntimeException("Ring buffer underflow");
+        }
         return rb[first];
     }
 
-    // TODO: When you get to part 5, implement the needed code to support iteration.
+    // When you get to part 5, implement the needed code to support iteration.
+    /** Iterator method */
+    @Override
+    public Iterator<T> iterator() {
+        return new KeyIterator();
+    }
+
+    private class KeyIterator implements Iterator<T> {
+        int wizardPos = first;
+        public boolean hasNext() {
+            return wizardPos != last;
+        }
+        public T next() {
+            T returnVal = rb[wizardPos];
+            wizardPos += 1;
+            if (wizardPos == capacity) {
+                wizardPos = 0;
+            }
+            return returnVal;
+        }
+    }
 }
