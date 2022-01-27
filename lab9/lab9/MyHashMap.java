@@ -7,7 +7,7 @@ import java.util.Set;
  *  A hash table-backed Map implementation. Provides amortized constant time
  *  access to elements via get(), remove(), and put() in the best case.
  *
- *  @author Your name here
+ *  @author Luis Lin
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
 
@@ -26,7 +26,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         this.clear();
     }
 
-    /* Removes all of the mappings from this map. */
+    /* Removes all the mappings from this map. */
     @Override
     public void clear() {
         this.size = 0;
@@ -53,19 +53,48 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("argument to get() is null");
+        }
+        int keyHash = hash(key);
+        return buckets[keyHash].get(key);
+    }
+
+    /* Resize buckets */
+    private void resize() {
+        ArrayMap<K, V>[] newBuckets = new ArrayMap[2 * this.buckets.length];
+        for (int i = 0; i < 2 * this.buckets.length; i += 1) {
+            newBuckets[i] = new ArrayMap<>();
+        }
+        for (int i = 0; i < this.buckets.length; i++) {
+            for (K key : buckets[i].keySet()) {
+                int j = Math.floorMod(key.hashCode(), 2 * this.buckets.length);
+                newBuckets[j].put(key, buckets[i].get(key));
+            }
+        }
+        buckets = newBuckets;
     }
 
     /* Associates the specified value with the specified key in this map. */
     @Override
     public void put(K key, V value) {
-        throw new UnsupportedOperationException();
+        if (key == null) {
+            throw new IllegalArgumentException("first argument to put() is null");
+        }
+        int keyHash = hash(key);
+        if (get(key) == null) {
+            size += 1;
+        }
+        buckets[keyHash].put(key, value);
+        if (loadFactor() > MAX_LF) {
+            resize();
+        }
     }
 
     /* Returns the number of key-value mappings in this map. */
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     //////////////// EVERYTHING BELOW THIS LINE IS OPTIONAL ////////////////
