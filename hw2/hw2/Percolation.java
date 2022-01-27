@@ -35,11 +35,11 @@ public class Percolation {
     // Validate that the site (row, col) is a valid index
     private void validate(int row, int col) {
         if (row >= size) {
-            throw new IndexOutOfBoundsException("Index of row"
-            + row + "is not between 0 and " + (size - 1));
+            throw new IndexOutOfBoundsException("Index of row "
+            + row + " is not between 0 and " + (size - 1));
         } else if (col >= size) {
-            throw new IndexOutOfBoundsException("Index of col" + col
-            + "is not between 0 and " + (size - 1));
+            throw new IndexOutOfBoundsException("Index of col " + col
+            + " is not between 0 and " + (size - 1));
         }
     }
 
@@ -229,6 +229,13 @@ public class Percolation {
         int top = size * size;
         int bottom = size * size + 1;
 
+        // corner case: size == 1
+        if (size == 1) {
+            status.union(top, site);
+            status.union(bottom, site);
+            return;
+        }
+
         // connect to virtual sites
         if (rowEdge(row) == 1) {
             status.union(top, site);
@@ -249,6 +256,9 @@ public class Percolation {
     /** Open the site (row, col) if it is not open already. */
     public void open(int row, int col) {
         validate(row, col);
+        if (isOpen(row, col)) {
+            return;
+        }
         grid[row][col] = true;
         openSite += 1;
         connectSite(row, col);
