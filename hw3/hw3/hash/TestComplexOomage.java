@@ -51,7 +51,7 @@ public class TestComplexOomage {
                 params.add(StdRandom.uniform(0, 255));
             }
             for (int j = 0; j < 3; j += 1) {
-                params.add(1);
+                params.add(10);
             }
             deadlyList.add(new ComplexOomage(params));
         }
