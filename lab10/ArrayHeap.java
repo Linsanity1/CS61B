@@ -108,13 +108,13 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /* Done: Your code here. */
-        if (contents[index] == null) {
-            return;
-        }
         if (index == 1) {
             return;
         }
         int parIndex = parentIndex(index);
+        if (contents[parIndex] == null) {
+            return;
+        }
         int minIndex = min(parIndex, index);
         // Base case
         if (minIndex == parIndex) {
@@ -133,9 +133,6 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         validateSinkSwimArg(index);
 
         /* Done: Your code here. */
-        if (contents[index] == null) {
-            return;
-        }
         int lIndex = leftIndex(index);
         int rIndex = rightIndex(index);
         int smallerIndex = min(lIndex, rIndex);
@@ -144,10 +141,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
             return;
         }
         // Sub-problem
-        if (smallerIndex == lIndex) {
+        if (smallerIndex == lIndex && contents[lIndex] != null) {
             swap(lIndex, index);
             sink(lIndex);
-        } else {
+        } else if (smallerIndex == rIndex && contents[rIndex] != null) {
             swap(rIndex, index);
             sink(rIndex);
         }
