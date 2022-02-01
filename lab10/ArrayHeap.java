@@ -195,12 +195,12 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         if (size == 0) {
             return null;
         }
+        T item = contents[1].item();
         swap(1, size);
-        Node root = contents[size];
         contents[size] = null;
-        sink(1);
         size -= 1;
-        return root.item();
+        sink(1);
+        return item;
     }
 
     /**
@@ -228,11 +228,10 @@ public class ArrayHeap<T> implements ExtrinsicPQ<T> {
         }
         for (int i = 1; i <= size; i += 1) {
             if (item.equals(contents[i].item())) {
-                swap(i, size);
-                contents[size] = null;
+                contents[i] = new Node(item, priority);
+                swim(i);
                 sink(i);
-                contents[size] = new Node(item, priority);
-                swim(size);
+                break;
             }
         }
     }
