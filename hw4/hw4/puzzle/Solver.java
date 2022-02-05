@@ -78,13 +78,14 @@ public class Solver {
             if (!w.equals(n.getPrevNode().getWorldState())) {
                 q.insert(newNode);
             }
-            //boolean isInMinPQ = false;
-            //boolean isSmaller = false;
-            /* Done: check this one
+            /* This comment part includes unnecessary optimization since A* uses estimation
+            boolean isInMinPQ = false;
+            boolean isSmaller = false;
+            // Done: check this one
             for (SearchNode node : q) {
                 if (node.getWorldState().equals(newNode.getWorldState())) {
                     isInMinPQ = true;
-                    isSmaller = newNode.compareTo(node) < 0;
+                    isSmaller = newNode.compareTo(node) < 0; // unnecessary
                     break;
                 }
             }
