@@ -71,16 +71,28 @@ public class Solver {
         int disToStart = n.getDisToInitState() + 1;
         for (WorldState w : neighbors) {
             searchNode newNode = new searchNode(w, disToStart, n);
-            if (n.getWorldState().equals(newNode.getWorldState())) {
-                break;
+            if (n.getPrevNode() == null) {
+                q.insert(newNode);
+                continue;
             }
-            boolean isInMinPQ = false;
-            boolean isSmaller = false;
-            // Done: check this one
+            if (!w.equals(n.getWorldState())){
+                for (searchNode node : q) {
+                    if (w.equals(node.getWorldState())) {
+                        if (newNode.compareTo(node) < 0) {
+                            q.insert(newNode);
+                        }
+                        break;
+                    }
+                }
+                q.insert(newNode);
+            }
+            //boolean isInMinPQ = false;
+            //boolean isSmaller = false;
+            /* Done: check this one
             for (searchNode node : q) {
                 if (node.getWorldState().equals(newNode.getWorldState())) {
                     isInMinPQ = true;
-                    isSmaller = newNode.compareTo(node) > 0;
+                    isSmaller = newNode.compareTo(node) < 0;
                     break;
                 }
             }
@@ -88,8 +100,7 @@ public class Solver {
                 q.insert(newNode);
             } else if (isInMinPQ && isSmaller) {
                 q.insert(newNode);
-            }
-
+            }*/
         }
     }
 
