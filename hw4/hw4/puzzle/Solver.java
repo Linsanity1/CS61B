@@ -75,17 +75,8 @@ public class Solver {
                 q.insert(newNode);
                 continue;
             }
-            if (!w.equals(n.getWorldState())) {
-                boolean isInMinPQ = false;
-                for (SearchNode node : q) {
-                    if (w.equals(n.getPrevNode().getWorldState())) {
-                        isInMinPQ = true;
-                        break;
-                    }
-                }
-                if (!isInMinPQ) {
-                    q.insert(newNode);
-                }
+            if (!w.equals(n.getPrevNode().getWorldState())) {
+                q.insert(newNode);
             }
             //boolean isInMinPQ = false;
             //boolean isSmaller = false;
