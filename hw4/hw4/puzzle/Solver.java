@@ -1,17 +1,16 @@
 package hw4.puzzle;
 
 import edu.princeton.cs.algs4.MinPQ;
-import java.util.Iterator;
-import java.util.LinkedList;
+import edu.princeton.cs.algs4.Stack;
 
 public class Solver {
-    private LinkedList<WorldState> solution;
+    private Stack<WorldState> solution;
 
     private static class searchNode implements Comparable<searchNode> {
         private final WorldState wState;
         private final int disToInitState;
         private final searchNode prevNode;
-        private final int priority;
+        private int priority;
 
         public searchNode(WorldState s, int dis, searchNode n) {
             wState = s;
@@ -59,9 +58,9 @@ public class Solver {
             }
             enqChildren(delNode, fringe);
         }
-        solution = new LinkedList<WorldState>();
+        solution = new Stack<WorldState>();
         while (goal != null) {
-            solution.addFirst(goal.getWorldState());
+            solution.push(goal.getWorldState());
             goal = goal.getPrevNode();
         }
     }
@@ -72,17 +71,20 @@ public class Solver {
         int disToStart = n.getDisToInitState() + 1;
         for (WorldState w : neighbors) {
             searchNode newNode = new searchNode(w, disToStart, n);
+            if (n.getWorldState().equals(newNode.getWorldState())) {
+                break;
+            }
             boolean isInMinPQ = false;
             boolean isSmaller = false;
             // Done: check this one
             for (searchNode node : q) {
                 if (node.getWorldState().equals(newNode.getWorldState())) {
                     isInMinPQ = true;
-                    isSmaller = newNode.compareTo(node) < 0;
+                    isSmaller = newNode.compareTo(node) > 0;
                     break;
                 }
             }
-            if (!isInMinPQ && !newNode.getWorldState().equals(n.getWorldState())) {
+            if (!isInMinPQ) {
                 q.insert(newNode);
             } else if (isInMinPQ && isSmaller) {
                 q.insert(newNode);
