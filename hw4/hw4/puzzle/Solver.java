@@ -4,15 +4,15 @@ import edu.princeton.cs.algs4.MinPQ;
 import edu.princeton.cs.algs4.Stack;
 
 public class Solver {
-    private Stack<WorldState> solution;
+    private final Stack<WorldState> solution;
 
-    private static class searchNode implements Comparable<searchNode> {
+    private static class SearchNode implements Comparable<SearchNode> {
         private final WorldState wState;
         private final int disToInitState;
-        private final searchNode prevNode;
-        private int priority;
+        private final SearchNode prevNode;
+        private final int priority;
 
-        public searchNode(WorldState s, int dis, searchNode n) {
+        private SearchNode(WorldState s, int dis, SearchNode n) {
             wState = s;
             disToInitState = dis;
             prevNode = n;
@@ -27,12 +27,12 @@ public class Solver {
             return disToInitState;
         }
 
-        public searchNode getPrevNode() {
+        public SearchNode getPrevNode() {
             return prevNode;
         }
 
         @Override
-        public int compareTo(searchNode o) {
+        public int compareTo(SearchNode o) {
             return priority - o.priority;
         }
     }
@@ -45,13 +45,13 @@ public class Solver {
      * puzzle using the A* algorithm. Assumes a solution exists.
      */
     public Solver(WorldState initial) {
-        MinPQ<searchNode> fringe = new MinPQ<>();
-        searchNode startNode = new searchNode(initial, 0, null);
+        MinPQ<SearchNode> fringe = new MinPQ<>();
+        SearchNode startNode = new SearchNode(initial, 0, null);
         fringe.insert(startNode);
-        searchNode goal = null;
+        SearchNode goal = null;
         while (!fringe.isEmpty()) {
-            searchNode delNode = fringe.delMin();
-            // System.out.print(delNode.wState.toString() + " "); for testing
+            SearchNode delNode = fringe.delMin();
+            //System.out.print(delNode.wState.toString() + " "); //for testing
             if (delNode.getWorldState().isGoal()) {
                 goal = delNode;
                 break;
@@ -66,30 +66,31 @@ public class Solver {
     }
 
     /* Enqueue all children of the current node. */
-    private static void enqChildren(searchNode n, MinPQ<searchNode> q) {
+    private static void enqChildren(SearchNode n, MinPQ<SearchNode> q) {
         Iterable<WorldState> neighbors = n.getWorldState().neighbors();
         int disToStart = n.getDisToInitState() + 1;
         for (WorldState w : neighbors) {
-            searchNode newNode = new searchNode(w, disToStart, n);
+            SearchNode newNode = new SearchNode(w, disToStart, n);
             if (n.getPrevNode() == null) {
                 q.insert(newNode);
                 continue;
             }
-            if (!w.equals(n.getWorldState())){
-                for (searchNode node : q) {
-                    if (w.equals(node.getWorldState())) {
-                        if (newNode.compareTo(node) < 0) {
-                            q.insert(newNode);
-                        }
+            if (!w.equals(n.getWorldState())) {
+                boolean isInMinPQ = false;
+                for (SearchNode node : q) {
+                    if (w.equals(n.getPrevNode().getWorldState())) {
+                        isInMinPQ = true;
                         break;
                     }
                 }
-                q.insert(newNode);
+                if (!isInMinPQ) {
+                    q.insert(newNode);
+                }
             }
             //boolean isInMinPQ = false;
             //boolean isSmaller = false;
             /* Done: check this one
-            for (searchNode node : q) {
+            for (SearchNode node : q) {
                 if (node.getWorldState().equals(newNode.getWorldState())) {
                     isInMinPQ = true;
                     isSmaller = newNode.compareTo(node) < 0;
