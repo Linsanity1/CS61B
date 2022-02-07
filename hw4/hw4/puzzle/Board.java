@@ -110,11 +110,17 @@ public class Board implements WorldState {
 
     @Override
     public boolean equals(Object y) {
+        if (y == null) {
+            return false;
+        }
         if (!(y instanceof Board)) {
             return false;
         }
         Board yBoard = (Board) y;
-        int N = (size() > yBoard.size()) ? size() : yBoard.size();
+        if (size() != yBoard.size()) {
+            return false;
+        }
+        int N = size();
         for (int i = 0; i < N; i += 1) {
             for (int j = 0; j < N; j += 1) {
                 if (tileAt(i, j) != yBoard.tileAt(i, j)) {
