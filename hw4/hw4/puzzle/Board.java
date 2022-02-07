@@ -103,10 +103,12 @@ public class Board implements WorldState {
         return totalDis;
     }
 
+    @Override
     public int estimatedDistanceToGoal() {
         return manhattan();
     }
 
+    @Override
     public boolean equals(Object y) {
         Board yBoard = (Board) y;
         for (int i = 0; i < size(); i += 1) {
@@ -117,6 +119,14 @@ public class Board implements WorldState {
             }
         }
         return true;
+    }
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((tileArray == null) ? 0 : tileArray.hashCode());
+        return result;
     }
 
     /** Returns the string representation of the board. 
