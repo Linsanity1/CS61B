@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.Merge;
 import edu.princeton.cs.algs4.Queue;
 
 public class MergeSort {
@@ -87,6 +88,9 @@ public class MergeSort {
     public static <Item extends Comparable> Queue<Item> mergeSort(
             Queue<Item> items) {
         // Done: Your code here!
+        if (items.size() <= 1) {
+            return items;
+        }
         Queue<Queue<Item>> q = MergeSort.makeSingleItemQueues(items);
         while (q.size() > 1) {
             q.enqueue(mergeSortedQueues(q.dequeue(), q.dequeue()));
@@ -116,6 +120,10 @@ public class MergeSort {
         Queue<Integer> sortedNumbers = MergeSort.mergeSort(numbers);
         System.out.println(numbers);
         System.out.println(sortedNumbers);
+        numbers.dequeue();
+        numbers.dequeue();
+        numbers.dequeue();
+        System.out.println(MergeSort.mergeSort(numbers));
     }
 
 }
