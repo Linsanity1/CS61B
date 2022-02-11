@@ -47,13 +47,58 @@ public class QuickSort {
     private static <Item extends Comparable> void partition(
             Queue<Item> unsorted, Item pivot,
             Queue<Item> less, Queue<Item> equal, Queue<Item> greater) {
-        // Your code here!
+        // Done: Your code here!
+        for (Item item : unsorted) {
+            if (item.compareTo(pivot) < 0) {
+                less.enqueue(item);
+            } else if (item.compareTo(pivot) == 0) {
+                equal.enqueue(item);
+            } else {
+                greater.enqueue(item);
+            }
+        }
     }
 
     /** Returns a Queue that contains the given items sorted from least to greatest. */
     public static <Item extends Comparable> Queue<Item> quickSort(
             Queue<Item> items) {
-        // Your code here!
-        return items;
+        // Done: Your code here!
+        // Base case
+        if (items.size() <= 1) {
+            return items;
+        }
+        // Recursion
+        Queue<Item> less = new Queue<>();
+        Queue<Item> equal = new Queue<>();
+        Queue<Item> greater = new Queue<>();
+        Item pivot = getRandomItem(items);
+        partition(items, pivot, less, equal, greater);
+
+        return catenate(catenate(quickSort(less), equal), quickSort(greater));
+    }
+
+    /** Unit tests in main. */
+    public static void main(String[] args) {
+        Queue<String> students = new Queue<String>();
+        students.enqueue("Alice");
+        students.enqueue("Vanessa");
+        students.enqueue("Ethan");
+        System.out.println(students);
+        Queue<String> sortedStudents = QuickSort.quickSort(students);
+        System.out.println(students);
+        System.out.println(sortedStudents);
+
+        Queue<Integer> numbers = new Queue<>();
+        numbers.enqueue(1);
+        numbers.enqueue(100);
+        numbers.enqueue(10);
+        System.out.println(numbers);
+        Queue<Integer> sortedNumbers = QuickSort.quickSort(numbers);
+        System.out.println(numbers);
+        System.out.println(sortedNumbers);
+        numbers.dequeue();
+        numbers.dequeue();
+        numbers.dequeue();
+        System.out.println(MergeSort.mergeSort(numbers));
     }
 }
